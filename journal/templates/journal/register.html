@@ -1,0 +1,52 @@
+{% extends 'journal/base.html' %}
+
+{% block title %}Реєстрація{% endblock %}
+
+{% block content %}
+
+<main class="form-signin w-100 m-auto">
+    <form method="POST">
+        {% csrf_token %}
+        <!-- {{ form.as_p }} -->
+
+        <i class="bi bi-book" style="font-size: 5rem;"></i>
+        <h1 class="h3 mb-3 fw-normal">Будь ласка, зареєструйтеся</h1>
+
+        <div class="form-floating">
+            <input type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}" value="{{ form.username.value|default:'' }}" class="form-control">
+            <label for="{{ form.username.id_for_label }}">Ім'я користувача</label>
+            {{form.username.errors}}
+        </div>
+        <div class="form-floating">
+            <input style="margin-bottom: 0px;" type="password" name="{{ form.password1.name }}" id="{{ form.password1.id_for_label }}" value="{{ form.password1.value|default:'' }}" class="form-control">
+            <label for="{{ form.password1.id_for_label }}">Пароль</label>
+            {{form.password1.errors}}
+        </div>
+        <div class="form-floating">
+            <input type="password" name="{{ form.password2.name }}" id="{{ form.password2.id_for_label }}" value="{{ form.password2.value|default:'' }}" class="form-control">
+            <label for="{{ form.password2.id_for_label }}">Підтвердження пароля</label>
+            {{form.password2.errors}}
+        </div>
+        {{ form.non_field_errors }}
+        
+
+        <button class="btn btn-primary w-100 py-2 mt-3" type="submit">Зареєструватися</button>
+    </form>
+
+
+
+<!-- <div>
+    <label for="id_username">Ім&#x27;я користувача:</label>
+    <input type="text" name="username" maxlength="150" autofocus required aria-describedby="id_username_helptext" id="id_username">
+ </div>
+ <div>
+    <label for="id_password1">Пароль:</label>
+    <input type="password" name="password1" autocomplete="new-password" required aria-describedby="id_password1_helptext" id="id_password1">
+ </div>
+ <div>
+    <label for="id_password2">Підтвердження пароля:</label>
+    <input type="password" name="password2" autocomplete="new-password" required aria-describedby="id_password2_helptext" id="id_password2">
+ </div> -->
+
+    
+{% endblock %}

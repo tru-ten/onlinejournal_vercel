@@ -1,0 +1,36 @@
+{% extends 'journal/base.html' %}
+
+{% block title %}Авторизація{% endblock %}
+
+{% block content %}
+
+<!-- <h2>Login</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+</form> -->
+
+<main class="form-signin w-100 m-auto ">
+    <form method="POST">
+        {% csrf_token %}
+        <i class="bi bi-book" style="font-size: 5rem;"></i>
+        <h1 class="h3 mb-3 fw-normal">Будь ласка, увійдіть</h1>
+    
+        <div class="form-floating">
+            <input type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}" value="{{ form.username.value|default:'' }}" class="form-control">
+            <label for="{{ form.username.id_for_label }}">Ім'я користувача</label>
+            {{form.username.errors}}
+        </div>
+        <div class="form-floating">
+            <input type="password" name="{{ form.password.name }}" id="{{ form.password.id_for_label }}" value="{{ form.password.value|default:'' }}" class="form-control">
+            <label for="{{ form.password.id_for_label }}">Пароль</label>
+            {{form.password.errors}}
+        </div>
+        {{ form.non_field_errors }}
+    
+        <button class="btn btn-primary w-100 py-2 mt-3" type="submit">Увійти</button>
+    </form>
+</main>
+    
+{% endblock %}

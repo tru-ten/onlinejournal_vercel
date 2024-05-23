@@ -1,0 +1,81 @@
+{% extends 'journal/base.html' %}
+
+{% block title %}Список статтей{% endblock %}
+
+{% block content %}
+
+<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+    <symbol id="chevron-right" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+      </symbol>
+</svg>
+
+<!-- <ul>
+{% for article in articles %}
+    <li><a href="{% url 'article_detail' article.slug %}"> {{article}}</a></li>
+{% endfor %}
+</ul> -->
+
+<div class="row mb-2">
+    <div class="col-md">
+        <form method="get" action="">
+            <div class="input-group mb-3">
+                <input type="text" name="q" class="form-control" placeholder="Пошук..." value="{{ request.GET.q }}">
+            </div>
+        </form>
+    </div>
+    <div class="col-md d-flex justify-content-end">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Вибір за категорією
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'articles' %}">Всі категорії</a></li>
+                {% for category in cats %}
+                    <li><a class="dropdown-item" href="{% url 'show_category' category.pk %}">{{ category }}</a></li>
+                {% endfor %}
+            </ul>
+          </div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    {% for article in articles %}
+    <div class="col-md-6 d-flex align-items-stretch">
+      <div class="row g-0 border rounded overflow-hidden flex-md mb-4 shadow-sm h-md-250 position-relative w-100">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary-emphasis">
+            {% if article.categories.all %}
+                {% for category in article.categories.all %}
+                    <span style="margin-right: 5px;">{{ category }}</span>
+                {% endfor %}
+            {% endif %}
+          </strong>
+          <h3 class="mb-2">{{article.title}}</h3>
+          <p class="card-text fw-light">{{article.author}}</p>
+          <div class="mb-1 text-body-secondary mb-3" style="margin-top: -5px;">{{article.created_at}}</div>
+          <p class="card-text mb-auto">{{article.content|truncatewords:50}}</p>
+          <a href="{% url 'article_detail' article.slug %}" class="icon-link gap-1 icon-link-hover stretched-link mt-5">
+            Продовжити читання
+            <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        {% for p in page_obj.paginator.page_range %}
+            {% if page_obj.number == p %}
+            <li class="page-item active"><a class="page-link" href="?page={{p}}&q={{ request.GET.q  }}">{{p}}</a></li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{p}}&q={{ request.GET.q  }}">{{p}}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</nav>
+
+{% endblock %}

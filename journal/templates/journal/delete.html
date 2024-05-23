@@ -1,0 +1,27 @@
+{% extends 'journal/base.html' %}
+
+{% block title %}Видаленння статті{% endblock %}
+
+{% block content %}
+
+<!-- <ul>
+    {% for article in articles %}
+        <li><a href="{% url 'delete_article' article.pk %}" >{{article}}</a></li>
+    {% endfor %}
+</ul> -->
+
+{% for article in articles %}
+<div class="row mb-2">
+    <div class="col-md-6">
+        <div class="h-100 p-2 border rounded-3">
+            <h6>{{article}}</h6>
+        </div>
+    </div>
+    <div class="col-md-6" style="display: flex; align-items: center;">
+        <a href="{% url 'article_detail' article.slug %}" class="btn btn-outline-secondary" type="button" style="margin-right: 10px;"><i class="bi bi-eye" style="margin-right: 5px;"></i>Переглянути статтю</a>
+        <a href="{% url 'delete_article' article.pk %}" class="btn btn-outline-danger" type="button"><i class="bi bi-trash3" style="margin-right: 5px;"></i>Видалити статтю</a>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

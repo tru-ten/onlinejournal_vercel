@@ -1,0 +1,31 @@
+{% extends 'journal/base.html' %}
+
+{% block title %}Видалення статті{% endblock %}
+
+{% block content %}
+
+<!-- <h2>Видалити статтю</h2>
+  <p>Ви впевнені, що хочете видалити цю статтю?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Підтвердити видалення</button>
+</form> -->
+
+<div class="modal modal-sheet position-static d-block p-4 py-md-5" tabindex="-1" role="dialog" id="modalChoice">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-3 shadow">
+      <form method="post">
+        {% csrf_token %}
+        <div class="modal-body p-4 text-center">
+          <h5 class="mb-0">Ви впевнені, що хочете видалити цю статтю?</h5>
+        </div>
+        <div class="modal-footer flex-nowrap p-0">
+          <button type="submit" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"><strong>Так, видалити</strong></button>
+          <a href="{% url 'delete' %}" type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0">Ні дякую</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

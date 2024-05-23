@@ -1,0 +1,55 @@
+{% extends 'journal/base.html' %}
+
+{% block title %}Стаття{% endblock %}
+
+{% block content %}
+
+<!-- {{article.title}}<br>
+{{article.content}}<br>
+{{article.created_at}}<br>
+{{article.author}}<br>
+
+{% if article.categories.all %}
+    {% for category in article.categories.all %}
+        {{ category }}
+    {% endfor %}
+    <br>
+{% endif %}
+
+{% if article.tags.all %}
+    {% for tag in article.tags.all %}
+        {{ tag }}
+    {% endfor %}
+    <br>
+{% endif %} -->
+
+<div style=" overflow-wrap: break-word; max-width: 800px; margin: 0 auto; padding: 20px;">
+    <p class="text-muted">
+        {% if article.categories.all %}
+        <strong class="d-inline-block mb-2 text-primary-emphasis">
+            {% for category in article.categories.all %}
+                <span style="margin-right: 15px;">{{ category }}</span>
+            {% endfor %}
+        </strong>
+        {% endif %}
+    </p>
+    <h1 class="display-4">{{ article.title }}</h1>
+    <p class="text-muted fw-light">{{ article.author}}</p>
+    <p class="text-muted">{{ article.created_at}}</p>
+    <div class="content">
+        {{ article.content|linebreaks }}
+    </div>
+    <div class="tags mt-3">
+        <div class="d-flex gap-2 py-4 flex-wrap">
+            {% for tag in article.tags.all %}
+                <span class="mb-2 badge d-flex p-2 align-items-center text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">
+                    <span class="px-1">#{{tag}}</span>
+                </span>
+            {% endfor %}
+        </div>
+    </div>
+    <hr class="custom-line">
+    <a href="{% url 'articles' %}" type="button" class="btn btn-outline-secondary mb-5">До списку статтей</a>
+</div>
+
+{% endblock %}

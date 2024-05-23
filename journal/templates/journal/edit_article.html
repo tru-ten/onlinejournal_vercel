@@ -1,0 +1,55 @@
+{% extends 'journal/base.html' %}
+
+{% block title %}Редагування статті{% endblock %}
+
+{% block content %}
+
+
+<form class="was-validated" method="POST">
+    {% csrf_token %}
+    <!-- {{ form.as_p }} -->
+
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.title.id_for_label }}">Заголовок:</label>
+        <!-- {{ form.title }} -->
+        <input class="form-control" type="text" name="title" id="id_title" value="{{ form.title.value|default_if_none:'' }}" required>
+        <div class="invalid-feedback">Це поле обов'язкове.</div>
+        {{ form.title.errors }}
+    </div>
+    <div class="mb-3">
+        <label for="{{ form.content.id_for_label }}">Вміст:</label>
+        <!-- {{ form.content }} -->
+        <textarea class="form-control" name="content" cols="60" rows="10" required id="id_content">{{ form.content.value|default_if_none:'' }}</textarea>
+        <div class="invalid-feedback">Це поле обов'язкове.</div>
+        {{ form.content.errors }}
+    </div>
+    <div class="fieldWrapper mb-5">
+        <div style="display: flex; align-items: stretch;">
+            <div>
+                <label class="mb-2" for="{{ form.categories.id_for_label }}">Категорії:</label>
+            <!-- {{ form.categories }} -->
+            </div>
+            <div style="margin-left: 5px;">
+                {% if form.categories.errors %}
+                   {% for error in form.categories.errors %}
+                      <p>({{error}})</p>
+                   {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+         {% for checkbox in form.categories %}
+            <div id="{{ form.categories.id_for_label }}" class="form-check">
+               <!-- {{ checkbox.tag }} -->
+               <input type="checkbox" name="{{ checkbox.data.name }}" value="{{ checkbox.data.value }}" id="{{ checkbox.id_for_label }}" class="form-check-input" {% if checkbox.data.selected %}checked{% endif %}>
+               <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+            </div>
+         {% endfor %}
+
+    </div>
+
+    <button class="btn btn-primary" type="submit">Перейти до редагування тегів</button>
+</form>
+
+
+{% endblock %}
